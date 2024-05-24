@@ -1,0 +1,7 @@
+.form-container {
+  margin-top: 100px;
+}
+
+.form-container > form {
+  max-width: 500px;
+}
