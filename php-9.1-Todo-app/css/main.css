@@ -1,0 +1,12 @@
+body {
+  background-color: #444433;
+  color: wheat;
+}
+
+.form-container > form {
+  max-width: 500px;
+}
+
+.todos-container {
+  max-width: 500px;
+}
