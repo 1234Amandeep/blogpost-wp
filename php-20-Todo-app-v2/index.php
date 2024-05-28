@@ -36,21 +36,23 @@ require_once "./includes/dbh.inc.php";
     <?php
   // selecting todos from db
   try {
-    $table = "todos";
-    $querySelect = "SELECT * FROM todos;";
+    $querySelect = "SELECT * FROM " . $table . ";";
 
     $stmt = $pdo->prepare($querySelect);
     $stmt->execute();
 
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+    $stmt = null;
+    $querySelect = null;
+
     if(count($result) != 0) {
       foreach($result as $row) {
         $status = ($row['status'] == 0 ? false : true);
         echo "<form class='todo-container mb-3' action='./includes/handleTodo.inc.php' method='post'          id='" . $row['id'] . "'>
                     <input type='hidden' name='form_id' value='" . $row['id'] . "'>
-                    <input type='checkbox' " . ($status ? 'checked' : '') . "  class='me-1' name='completed' onchange='onChange(" . $row['id'] . ")' id='completed'>
-                    <label for='completed' target='completed' class='me-3 " . ($status ? 'text-muted text-decoration-line-through' : '') . "'>" . $row['todo_text'] . "</label>
+                    <input type='checkbox' " . ($status ? 'checked' : '') . "  class='me-1' name='completed' onchange='onChange(" . $row['id'] . ")' id='completed-" . $row['id'] . "'>
+                    <label for='completed-" . $row['id'] . "' target='completed-" . $row['id'] . "' class='me-3 " . ($status ? 'text-muted text-decoration-line-through' : '') . "'>" . $row['todo_text'] . "</label>
                     <button type='submit' class='btn btn-danger btn-sm' name='delete-btn'>Delete</button>
                   </form>";
       }
@@ -58,9 +60,10 @@ require_once "./includes/dbh.inc.php";
     else {
       echo "<br> Empty list";
     }
-
+    
   } catch (PDOException $e) {
-    echo "<br> Error while selecting todos from db: " . $e->getMessage();
+    echo "<br> Empty list";
+    // echo "<br> Error while selecting todos from db: " . $e->getMessage();
   }
   ?>
   </div>

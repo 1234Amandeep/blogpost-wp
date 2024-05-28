@@ -1,5 +1,6 @@
 <?php
 
+$table = "todos";
 $dbname = "todoapp_v2";
 $dsn = "mysql:host=localhost;dbname=" . $dbname;
 $dbusername = "root";

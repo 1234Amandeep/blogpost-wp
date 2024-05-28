@@ -10,7 +10,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   
   if(isset($_POST["delete-btn"])) {
     // delete clicked!
-    $queryDelete = "DELETE FROM todos WHERE id = :formid;";
+    $queryDelete = "DELETE FROM " . $table . " WHERE id = :formid;";
 
     $stmtDelete = $pdo->prepare($queryDelete);
     $stmtDelete->bindParam("formid", $form_id);
@@ -25,7 +25,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     // status is turned on
     echo "status is turned on";
     $checked = 1;
-    $queryUpdateOn = "UPDATE todos SET status = :checked WHERE id = :formid;";
+    $queryUpdateOn = "UPDATE " . $table . " SET status = :checked WHERE id = :formid;";
 
     $stmtUpdateOn = $pdo->prepare($queryUpdateOn);
 
@@ -43,7 +43,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     // status is turned off
     echo "status is turned off";
     $checked = 0;
-    $queryUpdateOff = "UPDATE todos SET status = :checked WHERE id = :formid;";
+    $queryUpdateOff = "UPDATE " . $table . " SET status = :checked WHERE id = :formid;";
 
     $stmtUpdateOff = $pdo->prepare($queryUpdateOff);
 
