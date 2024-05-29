@@ -1,5 +1,6 @@
 <?php
 require_once "./includes/signup_view.inc.php";
+require_once "./includes/login_view.inc.php";
 require_once "./includes/config_session.inc.php";
 ?>
 
@@ -40,6 +41,12 @@ require_once "./includes/config_session.inc.php";
       </div>
     </form>
   </div>
+
+  <!-- showcasing signup_errors or success_msg -->
+  <?php
+  check_signup_errors();
+  ?>
+  <?php if(!isset($_SESSION['user_id'])) {?>
   <h1 class="text-center mt-5 mb-5"><u>Login</u></h1>
   <div class="login-form-container d-flex justify-content-center">
     <form action="./includes/login.inc.php" method="post">
@@ -51,19 +58,27 @@ require_once "./includes/config_session.inc.php";
       <br>
       <input type="password" name="pwd" id="pwd">
       <br><br>
-      <label for="email" target="email">Email:</label>
-      <br>
-      <input type="text" name="email" id="email">
-      <br><br>
       <div class="btn-container d-flex justify-content-center">
-        <button type="submit" class="btn btn-md btn-primary">Sign up</button>
+        <button type="submit" class="btn btn-md btn-primary">Login</button>
       </div>
     </form>
   </div>
+  <?php }else {
+  echo '<h3 class="text-center text-light">User logged in as ' . $_SESSION['user_username'] . '</h3>';
+  echo '<br><br>';
+  echo '<div class="logout-form-container d-flex justify-content-center">
+  <form action="./includes/logout.inc.php" method="post">
+  <div class="btn-container d-flex justify-content-center">
+  <button type="submit" class="btn btn-md btn-primary">Logout</button>
+  </div>
+  </form>
+  </div>';
+}?>
 
-  <!-- showcasing input_errors or success_msg -->
+
+  <!-- showcasing login_errors or success_msg -->
   <?php
-  showcase_input_errors();
+  check_login_errors();
   ?>
 </body>
 

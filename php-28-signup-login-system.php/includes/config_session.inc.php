@@ -15,13 +15,34 @@ session_set_cookie_params([
 session_start();
 
 // re-generating session_id after every 30mins
-if(!isset($_SESSION["last_regeneration"])) {
-  regerate_session_id();
-} else {
-  $interval = 60 * 30;
-  if((time() - $_SESSION["last_regeneration"]) >= $interval) { // 30mins have passed
+if(!isset($_SESSION['user_id'])) {
+  if(!isset($_SESSION["last_regeneration"])) {
     regerate_session_id();
+  } 
+  else {
+    $interval = 60 * 30;
+    if((time() - $_SESSION["last_regeneration"]) >= $interval) { // 30mins have passed
+      regerate_session_id();
+    }
   }
+} else {
+  if(!isset($_SESSION["last_regeneration"])) {
+    regerate_session_id_loggedin();
+  } 
+  else {
+    $interval = 60 * 30;
+    if((time() - $_SESSION["last_regeneration"]) >= $interval) { // 30mins have passed
+      regerate_session_id_loggedin();
+    }
+  }
+}
+
+function regerate_session_id_loggedin() {
+  session_regenerate_id(); // it is much more secure session_id then the original one
+  $newSessionId = session_create_id();
+  $sessionId = $newSessionId . "_" . $_SESSION['user_id'];
+  session_id($sessionId);
+  $_SESSION["last_regeneration"] = time();
 }
 
 function regerate_session_id() {
