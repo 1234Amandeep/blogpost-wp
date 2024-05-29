@@ -1,0 +1,8 @@
+CREATE TABLE users (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    username VARCHAR(30) NOT NULL,
+    email VARCHAR(30) NOT NULL,
+    pwd VARCHAR(256) NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIME,
+    PRIMARY KEY (id)
+);
